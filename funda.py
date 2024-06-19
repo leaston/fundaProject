@@ -1,7 +1,7 @@
 import sys
 from PyQt5.QtWidgets import QApplication, QMainWindow, QTextEdit, QAction, QFileDialog, QMessageBox
 from PyQt5.QtGui import QIcon
-from PyQt5.QtCore import Qt
+from PyQt5.QtPrintSupport import QPrintDialog, QPrinter
 
 
 class TextEditor(QMainWindow):
@@ -31,6 +31,14 @@ class TextEditor(QMainWindow):
         saveAsAction = QAction('Save As', self)
         saveAsAction.setShortcut('Ctrl+Shift+S')
         saveAsAction.triggered.connect(self.saveFileAs)
+
+        closeAction = QAction(QIcon('icons/close.png'), 'Close', self)
+        closeAction.setShortcut('Ctrl+W')
+        closeAction.triggered.connect(self.closeFile)
+
+        printAction = QAction(QIcon('icons/print.png'), 'Print', self)
+        printAction.setShortcut('Ctrl+P')
+        printAction.triggered.connect(self.printFile)
 
         exitAction = QAction(QIcon('icons/exit.png'), 'Exit', self)
         exitAction.setShortcut('Ctrl+Q')
@@ -68,6 +76,9 @@ class TextEditor(QMainWindow):
         fileMenu.addAction(saveAction)
         fileMenu.addAction(saveAsAction)
         fileMenu.addSeparator()
+        fileMenu.addAction(closeAction)
+        fileMenu.addAction(printAction)
+        fileMenu.addSeparator()
         fileMenu.addAction(exitAction)
 
         editMenu = menubar.addMenu('Edit')
@@ -98,7 +109,8 @@ class TextEditor(QMainWindow):
         self.show()
 
     def newFile(self):
-        self.textEdit.clear()
+        new_instance = TextEditor()
+        new_instance.show()
 
     def openFile(self):
         options = QFileDialog.Options()
@@ -107,6 +119,8 @@ class TextEditor(QMainWindow):
         if fileName:
             with open(fileName, 'r') as file:
                 self.textEdit.setText(file.read())
+            self.currentFile = fileName
+            self.setWindowTitle(f'Mon Application de Traitement de Texte - {fileName}')
 
     def saveFile(self):
         if hasattr(self, 'currentFile') and self.currentFile:
@@ -123,6 +137,18 @@ class TextEditor(QMainWindow):
             self.currentFile = fileName
             with open(fileName, 'w') as file:
                 file.write(self.textEdit.toPlainText())
+            self.setWindowTitle(f'Mon Application de Traitement de Texte - {fileName}')
+
+    def closeFile(self):
+        self.textEdit.clear()
+        self.setWindowTitle('Mon Application de Traitement de Texte')
+
+    def printFile(self):
+        printer = QPrinter(QPrinter.HighResolution)
+        dialog = QPrintDialog(printer, self)
+
+        if dialog.exec_() == QPrintDialog.Accepted:
+            self.textEdit.print_(printer)
 
     def about(self):
         QMessageBox.about(self, "About", "Ceci est une application de traitement de texte créée avec PyQt.")
