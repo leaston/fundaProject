@@ -1,26 +1,36 @@
 import os
-
-from PyQt5.QtWidgets import QMainWindow, QVBoxLayout, QWidget, QToolBar, QComboBox, QSpinBox, QSlider, QHBoxLayout
-from PyQt5.QtGui import QFont, QIcon
+from PyQt5.QtWidgets import QMainWindow, QVBoxLayout, QWidget, QToolBar, QComboBox, QSpinBox, QSlider, QHBoxLayout, \
+    QLabel, QTabWidget, QGridLayout, QFrame, QColorDialog
+from PyQt5.QtGui import QFont, QIcon, QPixmap, QTextCharFormat
 from PyQt5.QtCore import Qt
 from CustomTextEdit import CustomTextEdit
 from PagedTextEdit import PagedTextEdit
 from actions import TextEditorActions
 from menubar import create_menu
+from MegaMenuTabs import MegaMenu
+
+
+class ClickableLabel(QLabel):
+    def __init__(self, icon_path, callback, parent=None):
+        super().__init__(parent)
+        self.setPixmap(QPixmap(icon_path).scaled(16, 16, Qt.KeepAspectRatio, Qt.SmoothTransformation))
+        self.callback = callback
+
+    def mousePressEvent(self, event):
+        if event.button() == Qt.LeftButton:
+            self.callback()
 
 
 class MainWindow(QMainWindow):
     def __init__(self, new_instance_callback=None):
         super().__init__()
 
-        self.setWindowTitle('Funda')
+        self.setWindowTitle('Fuünda')
         self.setGeometry(100, 100, 1200, 800)
 
-        # Chemin relatif vers le répertoire icons
         icon_dir = os.path.join(os.path.dirname(__file__), 'icons')
         self.setWindowIcon(QIcon(os.path.join(icon_dir, 'app-icon.png')))
-        self.setWindowTitle('Funda')
-        #---------------------------------------------------------------------
+        self.setWindowTitle('Fuünda')
 
         central_widget = QWidget()
         self.setCentralWidget(central_widget)
@@ -28,49 +38,17 @@ class MainWindow(QMainWindow):
         main_layout = QVBoxLayout()
         central_widget.setLayout(main_layout)
 
-        # Appliquer une couleur de fond pour les zones extérieures
         central_widget.setStyleSheet("background-color: #f0f0f0;")
 
-        # Layout pour les boutons de contrôle (sous la barre d'outils)
+        self.create_tabs(main_layout)
+
         control_widget = QWidget()
         control_layout = QHBoxLayout(control_widget)
 
-        # Slider pour zoom
-        self.zoom_slider = QSlider(Qt.Horizontal)
-        self.zoom_slider.setMinimum(-10)  # Minimum zoom level
-        self.zoom_slider.setMaximum(10)  # Maximum zoom level
-        self.zoom_slider.setValue(0)  # Start at the middle point
-        self.zoom_slider.setTickPosition(QSlider.TicksBelow)
-        self.zoom_slider.setTickInterval(1)
-        self.zoom_slider.valueChanged.connect(self.handle_zoom)
-        control_layout.addWidget(self.zoom_slider)
-
-        # Widgets pour personnaliser la police et la taille de police
-        self.font_combo = QComboBox()
-        self.font_combo.addItems(["Arial", "Times New Roman", "Verdana"])
-        self.font_combo.currentIndexChanged.connect(self.update_labels_font)
-        control_layout.addWidget(self.font_combo)
-
-        self.size_spinbox = QSpinBox()
-        self.size_spinbox.setValue(12)
-        self.size_spinbox.valueChanged.connect(self.update_labels_size)
-        control_layout.addWidget(self.size_spinbox)
-
-        # Ajouter les boutons de navigation de page de PagedTextEdit
-        self.pagedTextEdit = PagedTextEdit()
-        control_layout.addWidget(self.pagedTextEdit.prev_button)
-        control_layout.addWidget(self.pagedTextEdit.page_label)
-        control_layout.addWidget(self.pagedTextEdit.next_button)
-
-        # Ajouter le widget de contrôle au layout principal
-        main_layout.addWidget(control_widget)
-
-        # Layout pour centrer la zone de saisie verticalement
         vertical_center_layout = QVBoxLayout()
         main_layout.addLayout(vertical_center_layout)
         vertical_center_layout.addStretch(1)
 
-        # Layout pour centrer la zone de saisie horizontalement
         center_layout = QHBoxLayout()
         vertical_center_layout.addLayout(center_layout)
         vertical_center_layout.addStretch(1)
@@ -80,19 +58,281 @@ class MainWindow(QMainWindow):
         center_layout.addWidget(self.textEdit)
         center_layout.addStretch(1)
 
-        # Initialiser les actions avant de créer la barre d'outils
         self.actions = TextEditorActions(self, new_instance_callback)
-
-        # Ajouter la barre d'outils et le menu
         self.create_toolbar()
         create_menu(self)
 
+    def create_tabs(self, main_layout):
+        tabs = QTabWidget()
+
+        tab_bar_height = 50
+        tab_bar_width = 150
+        tab_bar_font_size = 14
+        tabs.setStyleSheet(f"""
+                QTabBar::tab {{
+                    height: {tab_bar_height}px;
+                    width: {tab_bar_width}px;
+                    font-size: {tab_bar_font_size}px;
+                }}
+                QTabBar::tab:selected {{
+                    background: #F9F9F9;
+                }}
+            """)
+
+        main_layout.addWidget(tabs)
+
+        home_tab = QWidget()
+        insertion_tab = QWidget()
+        design_tab = QWidget()
+        page_layout_tab = QWidget()
+        reference_tab = QWidget()
+        revision_tab = QWidget()
+        view_tab = QWidget()
+        help_tab = QWidget()
+
+        tabs.addTab(home_tab, 'Home')
+        tabs.addTab(insertion_tab, 'Insertion')
+        tabs.addTab(design_tab, 'Design')
+        tabs.addTab(page_layout_tab, 'Page Layout')
+        tabs.addTab(reference_tab, 'Reference')
+        tabs.addTab(revision_tab, 'Revision')
+        tabs.addTab(view_tab, 'View')
+        tabs.addTab(help_tab, 'Help')
+
+        # Set layout for 'Home' tab
+        home_layout = QGridLayout()
+        home_tab.setLayout(home_layout)
+
+        # Set background color for the active tab body
+        home_tab.setStyleSheet("background: #F9F9F9;")
+        insertion_tab.setStyleSheet("background: #F9F9F9;")
+        design_tab.setStyleSheet("background: #F9F9F9;")
+        page_layout_tab.setStyleSheet("background: #F9F9F9;")
+        reference_tab.setStyleSheet("background: #F9F9F9;")
+        revision_tab.setStyleSheet("background: #F9F9F9;")
+        view_tab.setStyleSheet("background: #F9F9F9;")
+        help_tab.setStyleSheet("background: #F9F9F9;")
+
+        # Create QFrames for each sub-layout in 'Home' tab
+        text_frame = QFrame()
+        text_frame.setFrameShape(QFrame.Box)  # Bordure de type Box
+        text_frame.setLineWidth(1)  # Largeur de la bordure
+        text_layout = QGridLayout(text_frame)
+
+        align_frame = QFrame()
+        align_frame.setFrameShape(QFrame.Box)
+        align_frame.setLineWidth(1)
+        align_layout = QGridLayout(align_frame)
+
+        style_frame = QFrame()
+        style_frame.setFrameShape(QFrame.Box)
+        style_frame.setLineWidth(1)
+        style_layout = QGridLayout(style_frame)
+
+        # Create container widgets for the layouts
+        text_container = QWidget()
+        text_container.setLayout(text_layout)
+
+        align_container = QWidget()
+        align_container.setLayout(align_layout)
+
+        style_container = QWidget()
+        style_container.setLayout(style_layout)
+
+        # Add containers to a horizontal layout
+        h_layout = QHBoxLayout()
+        h_layout.addWidget(text_container)
+        h_layout.addWidget(align_container)
+        h_layout.addWidget(style_container)
+
+        # Set the stretch factors to make each container take 33% of the space
+        h_layout.setStretch(0, 1)
+        h_layout.setStretch(1, 1)
+        h_layout.setStretch(2, 1)
+
+        # Add the horizontal layout to the main layout
+        home_layout.addLayout(h_layout, 0, 0)
+
+        # Add clickable labels with icons
+        icon_dir = os.path.join(os.path.dirname(__file__), 'icons')
+        icons = [
+            (os.path.join(icon_dir, 'align-left.png'), self.align_left),
+            (os.path.join(icon_dir, 'align-center.png'), self.align_center),
+            (os.path.join(icon_dir, 'align-right.png'), self.align_right),
+            (os.path.join(icon_dir, 'justify.png'), self.justify_text),
+            (os.path.join(icon_dir, 'bold.png'), self.set_bold),
+            (os.path.join(icon_dir, 'italic.png'), self.set_italic),
+            (os.path.join(icon_dir, 'underline.png'), self.set_underline),
+            (os.path.join(icon_dir, 'strikethrough.png'), self.set_strikethrough),
+            (os.path.join(icon_dir, 'index.png'), self.set_index),
+            (os.path.join(icon_dir, 'superscript.png'), self.set_superscript)
+        ]
+
+        # Populate text_layout
+        text_labels = [
+            ("icons/bold.png", self.set_bold),
+            ("icons/italic.png", self.set_italic),
+            ("icons/underline.png", self.set_underline),
+            ("icons/strikethrough.png", self.set_strikethrough),
+            ("icons/index.png", self.set_index),
+            ("icons/superscript.png", self.set_superscript)
+        ]
+        for i, (icon_path, callback) in enumerate(text_labels):
+            label = ClickableLabel(icon_path, callback)
+            text_layout.addWidget(label, 0, i)
+
+        # Populate align_layout
+        align_labels = [
+            ("icons/align-left.png", self.align_left),
+            ("icons/align-center.png", self.align_center),
+            ("icons/align-right.png", self.align_right),
+            ("icons/justify.png", self.justify_text)
+        ]
+        for i, (icon_path, callback) in enumerate(align_labels):
+            label = ClickableLabel(icon_path, callback)
+            align_layout.addWidget(label, 0, i)
+
+        # Populate style_layout
+        style_labels = [
+            ("icons/color.png", self.apply_color),
+            ("icons/highlight.png", self.apply_highlight)
+        ]
+        for i, (icon_path, callback) in enumerate(style_labels):
+            label = ClickableLabel(icon_path, callback)
+            style_layout.addWidget(label, 0, i)
+
+        # Add the QSlider for zoom functionality to the home_layout
+        self.zoom_slider = QSlider(Qt.Horizontal)
+        self.zoom_slider.setMinimum(-10)  # Minimum zoom level
+        self.zoom_slider.setMaximum(10)  # Maximum zoom level
+        self.zoom_slider.setValue(0)  # Start at the middle point
+        self.zoom_slider.setTickPosition(QSlider.TicksBelow)
+        self.zoom_slider.setTickInterval(1)
+        self.zoom_slider.valueChanged.connect(self.handle_zoom)
+
+        # Set a fixed width for the QSlider
+        self.zoom_slider.setFixedWidth(self.width() // 4)
+
+        home_layout.addWidget(self.zoom_slider, 1, 0, 1, 1)  # Adjust this to position the slider as needed
+
+        self.font_combo = QComboBox()
+        self.font_combo.addItems(["Arial", "Times New Roman", "Verdana", "Baskerville", "Cambria", "Courier", "Garamond",\
+                                  "Georgia", "calibri", "Century Gothic", "Impact", "Verdana", "DejaVu Sans", \
+                                  "Copperplate", "Brush Script M7", "Roboto", "Monserrat", "Consolas", "Courier New", \
+                                  "Goudy Old Style", "Helvetica", "Lucida", "Lucida Bright", "Lucida Sans", "Palatino", \
+                                  "Optima", "Rockwell", "Perpetua", "Tahoma", "Segoe UI", "Trebuchet MS"])
+        self.font_combo.currentIndexChanged.connect(self.update_labels_font)
+        home_layout.addWidget(self.font_combo, 1, 1, 1, 1)
+        # control_layout.addWidget(self.font_combo)
+
+        self.size_spinbox = QSpinBox()
+        self.size_spinbox.setValue(12)
+        self.size_spinbox.valueChanged.connect(self.update_labels_size)
+        home_layout.addWidget(self.size_spinbox, 1, 2, 1, 1)
+
+        # Create layout for the page navigation controls
+        self.paged_text_layout = QHBoxLayout()
+        self.pagedTextEdit = PagedTextEdit()
+
+        # Adjust button size to fit the text
+        self.pagedTextEdit.prev_button.setFixedSize(self.pagedTextEdit.prev_button.sizeHint())
+        self.pagedTextEdit.next_button.setFixedSize(self.pagedTextEdit.next_button.sizeHint())
+
+        # Add buttons and label to layout
+        self.paged_text_layout.addWidget(self.pagedTextEdit.prev_button)
+        self.paged_text_layout.addWidget(self.pagedTextEdit.page_label)
+        self.paged_text_layout.addWidget(self.pagedTextEdit.next_button)
+
+        self.paged_text_layout.addStretch()  # Push the controls to the left
+
+        home_layout.addLayout(self.paged_text_layout, 2, 0, 1, 3)  # Add the navigation controls layout to home_layout
+
+    def align_left(self):
+        self.textEdit.setAlignment(Qt.AlignLeft)
+
+    def align_center(self):
+        self.textEdit.setAlignment(Qt.AlignCenter)
+
+    def align_right(self):
+        self.textEdit.setAlignment(Qt.AlignRight)
+
+    def justify_text(self):
+        self.textEdit.setAlignment(Qt.AlignJustify)
+
+    def set_bold(self):
+        font = self.textEdit.font()
+        font.setBold(not font.bold())
+        self.textEdit.setFont(font)
+
+    def set_italic(self):
+        font = self.textEdit.font()
+        font.setItalic(not font.italic())
+        self.textEdit.setFont(font)
+
+    def set_underline(self):
+        font = self.textEdit.font()
+        font.setUnderline(not font.underline())
+        self.textEdit.setFont(font)
+
+    # Texte barré
+    def set_strikethrough(self):
+        font = self.textEdit.font()
+        font.setStrikethrough(not font.strikethrough())
+        self.textEdit.setFont(font)
+
+    def set_index(self): # Texte en indice
+        font = self.textEdit.font()
+        font.setIndex(not font.index())
+        self.textEdit.setFont(font)
+
+    # Texte en exposant
+    def set_superscript(self):
+        font = self.textEdit.font()
+        font.setSuperscript(not font.superscript())
+        self.textEdit.setFont(font)
+
+    # Implement color application logic
+    def apply_color(self):
+        color = QColorDialog.getColor()
+        if color.isValid():
+            char_format = QTextCharFormat()
+            char_format.setForeground(color)
+            cursor = self.textEdit.textCursor()
+            cursor.mergeCharFormat(char_format)
+
+    # Implement highlight application logic
+    def apply_highlight(self):
+        color = QColorDialog.getColor()
+        if color.isValid():
+            char_format = QTextCharFormat()
+            char_format.setBackground(color)
+            cursor = self.textEdit.textCursor()
+            cursor.mergeCharFormat(char_format)
+
+    def handle_zoom(self, value):
+        font = self.textEdit.font()
+        base_size = 12
+        font.setPointSize(base_size + value)
+        self.textEdit.setFont(font)
+
+        # Adjust the width of the textEdit based on the zoom level
+        a4_base_width = int(210 * 3.78)  # A4 width in pixels
+        new_width = a4_base_width + value * 20  # Adjust this factor as needed
+        self.textEdit.setFixedWidth(new_width)
+
+    def handle_zoom(self, value):
+        font = self.textEdit.font()
+        base_size = 12
+        font.setPointSize(base_size + value)
+        self.textEdit.setFont(font)
+        a4_base_width = int(210 * 3.78)
+        new_width = a4_base_width + value * 20
+        self.textEdit.setFixedWidth(new_width)
+
     def create_toolbar(self):
         self.toolbar = QToolBar("Main Toolbar")
-        # self.toolbar.setStyleSheet("height: 100px;")  # Fixer la hauteur de la barre d'outils
         self.addToolBar(Qt.TopToolBarArea, self.toolbar)
 
-        # Ajouter des actions à la barre d'outils
         self.toolbar.addAction(self.actions.newAction)
         self.toolbar.addAction(self.actions.openAction)
         self.toolbar.addAction(self.actions.saveAction)
@@ -116,14 +356,3 @@ class MainWindow(QMainWindow):
         font.setFamily(self.textEdit.font().family())
         font.setPointSize(size)
         self.textEdit.setFont(font)
-
-    def handle_zoom(self, value):
-        font = self.textEdit.font()
-        base_size = 12
-        font.setPointSize(base_size + value)
-        self.textEdit.setFont(font)
-
-        # Ajuster la largeur de la zone de saisie en fonction du zoom
-        a4_base_width = int(210 * 3.78)  # Largeur A4 en pixels
-        new_width = a4_base_width + value * 20  # Ajuster ce facteur selon vos besoins
-        self.textEdit.setFixedWidth(new_width)

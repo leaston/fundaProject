@@ -4,33 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="297463b3-b92b-4db9-af10-1c49271d3758" name="Changes" comment="Ajout de quelques sous-menus Ctrl+N qui s'ouvre dans une nouvelle fenêtre, et Ctrl+P pour imprimer">
-      <change afterPath="$PROJECT_DIR$/CustomTextEdit.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/MainWindow.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/MegaMenu.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/MegaMenuTabs.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/PagedTextEdit.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/actions.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/editor.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/icons/align-center.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/icons/align-left.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/icons/align-right.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/icons/app-icon.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/icons/bold.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/icons/close-24x24.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/icons/color.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/icons/highlight.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/icons/italic.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/icons/justify.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/icons/new-24x24.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/icons/open-24x24.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/icons/print-24x24.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/icons/save-24x24.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/icons/underline.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/menubar.py" afterDir="false" />
+    <list default="true" id="297463b3-b92b-4db9-af10-1c49271d3758" name="Changes" comment="Ajout des icônes et amélioration de MegaMenuTabs.py pour afficher les bordures des QGridLayout contenu dans l'onglet 'Home'">
+      <change afterPath="$PROJECT_DIR$/icons/index.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/icons/strikethrough.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/icons/superscript.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/funda.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MainWindow.py" beforeDir="false" afterPath="$PROJECT_DIR$/MainWindow.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MegaMenuTabs.py" beforeDir="false" afterPath="$PROJECT_DIR$/MegaMenuTabs.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -65,6 +45,7 @@
     &quot;Python.MainWindow.executor&quot;: &quot;Run&quot;,
     &quot;Python.MegaMenu.executor&quot;: &quot;Run&quot;,
     &quot;Python.MegaMenuOnglets.executor&quot;: &quot;Run&quot;,
+    &quot;Python.MegaMenuTabs (1).executor&quot;: &quot;Run&quot;,
     &quot;Python.MegaMenuTabs.executor&quot;: &quot;Run&quot;,
     &quot;Python.funda.executor&quot;: &quot;Run&quot;,
     &quot;Python.main.executor&quot;: &quot;Run&quot;,
@@ -78,29 +59,7 @@
       <recent name="C:\Users\moses\PycharmProjects\fundaProject\icons" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.MegaMenuTabs">
-    <configuration name="CustomTextEdit" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
-      <module name="fundaProject" />
-      <option name="ENV_FILES" value="" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/CustomTextEdit.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
+  <component name="RunManager" selected="Python.main">
     <configuration name="MainWindow" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="fundaProject" />
       <option name="ENV_FILES" value="" />
@@ -137,6 +96,28 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/MegaMenu.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="MegaMenuTabs (1)" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="fundaProject" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/MegaMenuTabs.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -191,11 +172,11 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.MegaMenuTabs" />
         <item itemvalue="Python.main" />
-        <item itemvalue="Python.MegaMenu" />
+        <item itemvalue="Python.MegaMenuTabs (1)" />
         <item itemvalue="Python.MainWindow" />
-        <item itemvalue="Python.CustomTextEdit" />
+        <item itemvalue="Python.MegaMenuTabs" />
+        <item itemvalue="Python.MegaMenu" />
       </list>
     </recent_temporary>
   </component>
@@ -239,7 +220,15 @@
       <option name="project" value="LOCAL" />
       <updated>1718818357821</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Ajout des icônes et amélioration de MegaMenuTabs.py pour afficher les bordures des QGridLayout contenu dans l'onglet 'Home'">
+      <option name="closed" value="true" />
+      <created>1719022911643</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1719022911643</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -258,6 +247,7 @@
     <MESSAGE value="Premier commit" />
     <MESSAGE value="Ajout de la barre d'outils" />
     <MESSAGE value="Ajout de quelques sous-menus Ctrl+N qui s'ouvre dans une nouvelle fenêtre, et Ctrl+P pour imprimer" />
-    <option name="LAST_COMMIT_MESSAGE" value="Ajout de quelques sous-menus Ctrl+N qui s'ouvre dans une nouvelle fenêtre, et Ctrl+P pour imprimer" />
+    <MESSAGE value="Ajout des icônes et amélioration de MegaMenuTabs.py pour afficher les bordures des QGridLayout contenu dans l'onglet 'Home'" />
+    <option name="LAST_COMMIT_MESSAGE" value="Ajout des icônes et amélioration de MegaMenuTabs.py pour afficher les bordures des QGridLayout contenu dans l'onglet 'Home'" />
   </component>
 </project>
