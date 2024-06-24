@@ -4,14 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="297463b3-b92b-4db9-af10-1c49271d3758" name="Changes" comment="Ajout des icônes et amélioration de MegaMenuTabs.py pour afficher les bordures des QGridLayout contenu dans l'onglet 'Home'">
-      <change afterPath="$PROJECT_DIR$/icons/index.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/icons/strikethrough.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/icons/superscript.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MainWindow.py" beforeDir="false" afterPath="$PROJECT_DIR$/MainWindow.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MegaMenuTabs.py" beforeDir="false" afterPath="$PROJECT_DIR$/MegaMenuTabs.py" afterDir="false" />
-    </list>
+    <list default="true" id="297463b3-b92b-4db9-af10-1c49271d3758" name="Changes" comment="Grosse mise à jour sur le fichier MainWindow.py en intégrant le menu à onglets et certains widgets de couleur de texte et de surlignement, diminuer la longueur du QSlider et le positionnement des boutons 'Previous', 'Page 1/1' et 'Next' tout à gauche de l'inglet 'Home'" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -228,7 +221,15 @@
       <option name="project" value="LOCAL" />
       <updated>1719022911643</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Grosse mise à jour sur le fichier MainWindow.py en intégrant le menu à onglets et certains widgets de couleur de texte et de surlignement, diminuer la longueur du QSlider et le positionnement des boutons 'Previous', 'Page 1/1' et 'Next' tout à gauche de l'inglet 'Home'">
+      <option name="closed" value="true" />
+      <created>1719197477217</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1719197477217</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -248,6 +249,7 @@
     <MESSAGE value="Ajout de la barre d'outils" />
     <MESSAGE value="Ajout de quelques sous-menus Ctrl+N qui s'ouvre dans une nouvelle fenêtre, et Ctrl+P pour imprimer" />
     <MESSAGE value="Ajout des icônes et amélioration de MegaMenuTabs.py pour afficher les bordures des QGridLayout contenu dans l'onglet 'Home'" />
-    <option name="LAST_COMMIT_MESSAGE" value="Ajout des icônes et amélioration de MegaMenuTabs.py pour afficher les bordures des QGridLayout contenu dans l'onglet 'Home'" />
+    <MESSAGE value="Grosse mise à jour sur le fichier MainWindow.py en intégrant le menu à onglets et certains widgets de couleur de texte et de surlignement, diminuer la longueur du QSlider et le positionnement des boutons 'Previous', 'Page 1/1' et 'Next' tout à gauche de l'inglet 'Home'" />
+    <option name="LAST_COMMIT_MESSAGE" value="Grosse mise à jour sur le fichier MainWindow.py en intégrant le menu à onglets et certains widgets de couleur de texte et de surlignement, diminuer la longueur du QSlider et le positionnement des boutons 'Previous', 'Page 1/1' et 'Next' tout à gauche de l'inglet 'Home'" />
   </component>
 </project>
