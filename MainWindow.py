@@ -1,6 +1,6 @@
 import os
 from PyQt5.QtWidgets import QMainWindow, QVBoxLayout, QWidget, QToolBar, QComboBox, QSpinBox, QSlider, QHBoxLayout, \
-    QLabel, QTabWidget, QGridLayout, QFrame, QColorDialog
+    QLabel, QTabWidget, QGridLayout, QFrame, QColorDialog, QStatusBar, QScrollArea, QMenuBar, QDockWidget, QTextEdit
 from PyQt5.QtGui import QFont, QIcon, QPixmap, QTextCharFormat
 from PyQt5.QtCore import Qt
 from CustomTextEdit import CustomTextEdit
@@ -61,6 +61,8 @@ class MainWindow(QMainWindow):
         self.actions = TextEditorActions(self, new_instance_callback)
         self.create_toolbar()
         create_menu(self)
+
+        self.create_status_bar()
 
     def create_tabs(self, main_layout):
         tabs = QTabWidget()
@@ -153,21 +155,6 @@ class MainWindow(QMainWindow):
         # Add the horizontal layout to the main layout
         home_layout.addLayout(h_layout, 0, 0)
 
-        # Add clickable labels with icons
-        icon_dir = os.path.join(os.path.dirname(__file__), 'icons')
-        icons = [
-            (os.path.join(icon_dir, 'align-left.png'), self.align_left),
-            (os.path.join(icon_dir, 'align-center.png'), self.align_center),
-            (os.path.join(icon_dir, 'align-right.png'), self.align_right),
-            (os.path.join(icon_dir, 'justify.png'), self.justify_text),
-            (os.path.join(icon_dir, 'bold.png'), self.set_bold),
-            (os.path.join(icon_dir, 'italic.png'), self.set_italic),
-            (os.path.join(icon_dir, 'underline.png'), self.set_underline),
-            (os.path.join(icon_dir, 'strikethrough.png'), self.set_strikethrough),
-            (os.path.join(icon_dir, 'index.png'), self.set_index),
-            (os.path.join(icon_dir, 'superscript.png'), self.set_superscript)
-        ]
-
         # Populate text_layout
         text_labels = [
             ("icons/bold.png", self.set_bold),
@@ -216,11 +203,15 @@ class MainWindow(QMainWindow):
         home_layout.addWidget(self.zoom_slider, 1, 0, 1, 1)  # Adjust this to position the slider as needed
 
         self.font_combo = QComboBox()
-        self.font_combo.addItems(["Arial", "Times New Roman", "Verdana", "Baskerville", "Cambria", "Courier", "Garamond",\
-                                  "Georgia", "calibri", "Century Gothic", "Impact", "Verdana", "DejaVu Sans", \
-                                  "Copperplate", "Brush Script M7", "Roboto", "Monserrat", "Consolas", "Courier New", \
-                                  "Goudy Old Style", "Helvetica", "Lucida", "Lucida Bright", "Lucida Sans", "Palatino", \
-                                  "Optima", "Rockwell", "Perpetua", "Tahoma", "Segoe UI", "Trebuchet MS"])
+        self.font_combo.addItems(sorted([
+            "Arial", "Arial Black", "Comic Sans MS", "Courier New", "Georgia",
+            "Impact", "Lucida Console", "Lucida Sans Unicode", "Palatino Linotype",
+            "Tahoma", "Times New Roman", "Trebuchet MS", "Verdana", "Baskerville",
+            "Cambria", "Courier", "Garamond", "calibri", "Century Gothic",
+            "DejaVu Sans", "Copperplate", "Brush Script M7", "Roboto", "Monserrat",
+            "Consolas", "Goudy Old Style", "Helvetica", "Lucida Bright", "Lucida Sans",
+            "Palatino", "Optima", "Rockwell", "Perpetua", "Segoe UI"
+        ]))
         self.font_combo.currentIndexChanged.connect(self.update_labels_font)
         home_layout.addWidget(self.font_combo, 1, 1, 1, 1)
         # control_layout.addWidget(self.font_combo)
@@ -277,19 +268,21 @@ class MainWindow(QMainWindow):
     # Texte barré
     def set_strikethrough(self):
         font = self.textEdit.font()
-        font.setStrikethrough(not font.strikethrough())
+        font.setStrikeOut(not font.strikeOut())
         self.textEdit.setFont(font)
 
-    def set_index(self): # Texte en indice
-        font = self.textEdit.font()
-        font.setIndex(not font.index())
-        self.textEdit.setFont(font)
+    def set_index(self):  # Texte en indice
+        char_format = QTextCharFormat()
+        cursor = self.textEdit.textCursor()
+        char_format.setVerticalAlignment(QTextCharFormat.AlignSubScript)
+        cursor.mergeCharFormat(char_format)
 
     # Texte en exposant
     def set_superscript(self):
-        font = self.textEdit.font()
-        font.setSuperscript(not font.superscript())
-        self.textEdit.setFont(font)
+        char_format = QTextCharFormat()
+        cursor = self.textEdit.textCursor()
+        char_format.setVerticalAlignment(QTextCharFormat.AlignSuperScript)
+        cursor.mergeCharFormat(char_format)
 
     # Implement color application logic
     def apply_color(self):
@@ -308,17 +301,6 @@ class MainWindow(QMainWindow):
             char_format.setBackground(color)
             cursor = self.textEdit.textCursor()
             cursor.mergeCharFormat(char_format)
-
-    def handle_zoom(self, value):
-        font = self.textEdit.font()
-        base_size = 12
-        font.setPointSize(base_size + value)
-        self.textEdit.setFont(font)
-
-        # Adjust the width of the textEdit based on the zoom level
-        a4_base_width = int(210 * 3.78)  # A4 width in pixels
-        new_width = a4_base_width + value * 20  # Adjust this factor as needed
-        self.textEdit.setFixedWidth(new_width)
 
     def handle_zoom(self, value):
         font = self.textEdit.font()
@@ -356,3 +338,43 @@ class MainWindow(QMainWindow):
         font.setFamily(self.textEdit.font().family())
         font.setPointSize(size)
         self.textEdit.setFont(font)
+
+    def create_status_bar(self):
+        self.statusBar = QStatusBar()
+        self.setStatusBar(self.statusBar)
+        status_bar_border = "0px groove #f0f0f0"
+        status_bar_height = 20
+        status_bar_bckg = "#f9f9f9"
+
+        self.statusBar.addPermanentWidget(QLabel("Ready"))
+        self.statusBar.showMessage("Ready")
+        self.statusBar.setStyleSheet(f"""
+            QStatusBar {{
+                border: {status_bar_border}; 
+                height: {status_bar_height}px; 
+                background: {status_bar_bckg};
+                color: #666666;
+                font-size: 12px;
+                font-weight: bold;
+                padding: 2px 5px 2px 5px;
+            }}
+            QStatusBar QLabel {{
+                padding-left: 5px;
+                padding-right: 5px;
+            }}""")
+
+    def create_dock_widgets(self):
+        self.dock_widgets = QDockWidget("Dock Widgets")
+        self.addDockWidget(Qt.RightDockWidgetArea, self.dock_widgets)
+        self.dock_widgets.setAllowedAreas(Qt.RightDockWidgetArea)
+        self.dock_widgets.setWidget(QTextEdit())
+        self.dock_widgets.setFeatures(QDockWidget.DockWidgetMovable)
+
+    def create_tool_bar(self):
+        self.toolbar = QToolBar()
+
+    def create_menu_bar(self):
+        self.menubar = QMenuBar(self)
+        self.setMenuBar(self.menubar)
+
+        self.fileMenu = self.menubar.addMenu("File")

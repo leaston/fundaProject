@@ -1,4 +1,4 @@
-from PyQt5.QtWidgets import QTextEdit
+from PyQt5.QtWidgets import QTextEdit, QStatusBar
 from PyQt5.QtGui import QFont
 
 
@@ -48,4 +48,9 @@ class CustomTextEdit(QTextEdit):
     def zoomOut(self, range=1):
         font = self.font()
         font.setPointSize(max(1, font.pointSize() - range))  # Éviter une taille de police négative ou zéro
+        self.setFont(font)
+
+    def resetZoom(self):
+        font = self.font()
+        font.setPointSize(self.initial_font_size)
         self.setFont(font)

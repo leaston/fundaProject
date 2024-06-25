@@ -1,7 +1,7 @@
-from PyQt5.QtCore import pyqtSignal
-from PyQt5.QtWidgets import QAction, QFileDialog, QMessageBox
+from PyQt5.QtCore import pyqtSignal, Qt
+from PyQt5.QtWidgets import QAction, QFileDialog, QMessageBox, QTextEdit
 from PyQt5.QtPrintSupport import QPrintDialog, QPrinter
-from PyQt5.QtGui import QIcon
+from PyQt5.QtGui import QIcon, QTextCursor
 import os
 
 
@@ -108,9 +108,24 @@ class TextEditorActions:
     def about(self):
         QMessageBox.about(self.parent, "About", "Ceci est une application de traitement de texte créée avec PyQt.")
 
-'''
-class ActionHandler:
-    newFileTriggered = pyqtSignal()
-    closeFileTriggered = pyqtSignal()
-    printFileTriggered = pyqtSignal()
-'''
+
+class TextEdit(QTextEdit):
+    def __init__(self, parent=None):
+        super().__init__(parent)
+        self.setAcceptRichText(False)
+        self.setLineWrapMode(QTextEdit.NoWrap)
+
+    def keyPressEvent(self, event):
+        if event.key() == Qt.Key_Return and event.modifiers() == Qt.ControlModifier:
+            self.insertPlainText('\n')
+        else:
+            super().keyPressEvent(event)
+
+    def mouseDoubleClickEvent(self, event):
+        if event.button() == Qt.LeftButton:
+            cursor = self.textCursor()
+            if cursor.hasSelection():
+                cursor.select(QTextCursor.WordUnderCursor)
+                self.setTextCursor(cursor)
+        else:
+            super().mouseDoubleClickEvent(event)

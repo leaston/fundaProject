@@ -1,8 +1,6 @@
 import sys
 from PyQt5.QtWidgets import QApplication
-from editor import TextEditor
 from MainWindow import MainWindow
-from actions import TextEditorActions
 
 
 def create_new_instance():

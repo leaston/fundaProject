@@ -101,21 +101,6 @@ class MegaMenu(QMainWindow):
         # Add the horizontal layout to the main layout
         home_layout.addLayout(h_layout, 0, 0)
 
-        # Add clickable labels with icons
-        icon_dir = os.path.join(os.path.dirname(__file__), 'icons')
-        icons = [
-            (os.path.join(icon_dir, 'align-left.png'), self.align_left),
-            (os.path.join(icon_dir, 'align-center.png'), self.align_center),
-            (os.path.join(icon_dir, 'align-right.png'), self.align_right),
-            (os.path.join(icon_dir, 'justify.png'), self.justify_text),
-            (os.path.join(icon_dir, 'bold.png'), self.set_bold),
-            (os.path.join(icon_dir, 'italic.png'), self.set_italic),
-            (os.path.join(icon_dir, 'underline.png'), self.set_underline),
-            (os.path.join(icon_dir, 'strikethrough.png'), self.set_strikethrough),
-            (os.path.join(icon_dir, 'index.png'), self.set_index),
-            (os.path.join(icon_dir, 'superscript.png'), self.set_superscript)
-        ]
-
         # Populate text_layout
         text_labels = [
             ("icons/bold.png", self.set_bold),
